@@ -12,8 +12,12 @@ void ofApp::setup(){
     // open serial
 	serial.listDevices();
 	vector <ofSerialDeviceInfo> deviceList = serial.getDeviceList();
+    
     int baud = 57600;
     serial.setup("/dev/tty.usbserial-AD0267J7", baud);
+
+ 
+    
     
     // init grid
     vec2 size(800, 200);
@@ -33,17 +37,27 @@ void ofApp::setup(){
     
     // gui
     guiGrid.setup();
-    guiGrid.add(bDrawGrid.set("draw_grid", true));
-    guiGrid.add(grid.parameters);
+    guiGrid.setPosition(ofGetWidth()-guiGrid.getWidth()-20, 0);
+
+    parameters.setName("led_candles");
+    parameters.add(bDrawGrid.set("draw_grid", true));
+    parameters.add(grid.parameters);
+
+    guiGrid.add(parameters);
+    
+    //OSCControl
+    oscControl.setup(7000);
+    oscControl.addParameterGroup(&parameters);
 }
 
 
 void ofApp::update(){
+    oscControl.update();
+    
     // update grid
     grid.fade();
     grid.fillWithRandom();
 
-    
     // update devices
     for (auto& d : devices) {
         d.update(grid);
@@ -97,13 +111,15 @@ void ofApp::draw(){
     ofDrawBitmapString("messages per frame: " + ofToString(devices.size()), 15, 50+420);
     
     guiGrid.draw();
-    gui.draw();
+//    gui.draw();
 }
 
 
 
 void ofApp::keyPressed(int key){
-    
+    if (key == OF_KEY_RETURN){
+        oscControl.sendAllParameters("169.254.225.12", 8000);
+    }
 }
 
 
