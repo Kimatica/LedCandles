@@ -31,12 +31,6 @@ public:
     ofxPanel gui;
     
     ofParameter<bool> bDrawGrid;
-    ofParameter<bool> useMovie;
-    ofParameter<bool> drawMovie;
-    ofParameter<int> movieOffsetX;
-    ofParameter<int> movieOffsetY;
-    
-    ofVideoPlayer movie;
     
     
     // --------------------------

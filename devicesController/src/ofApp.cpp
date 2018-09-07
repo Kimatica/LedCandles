@@ -33,35 +33,16 @@ void ofApp::setup(){
     
     // gui
     guiGrid.setup();
+    guiGrid.add(bDrawGrid.set("draw_grid", true));
     guiGrid.add(grid.parameters);
-    
-    gui.setup();
-    gui.add(bDrawGrid.set("draw_grid", true));
-    gui.add(useMovie.set("use_movie", true));
-    gui.add(movieOffsetX.set("movie_offsetX", 0, 0, 500));
-    gui.add(movieOffsetY.set("movie_offsetY", 0, 0, 500));
-    gui.add(drawMovie.set("draw_movie", true));
-    
-    // video
-    movie.load("movies/fire_loop.mp4");
-    movie.setLoopState(OF_LOOP_NORMAL);
-    movie.play();
 }
 
 
 void ofApp::update(){
-    
-    if (useMovie) {
-        // update video
-        movie.update();
-        // update grid
-        grid.setFrom(movie.getPixels(), movieOffsetX, movieOffsetY);
-    }
-    else {
-        // update grid
-        grid.fade();
-        grid.fillWithRandom();
-    }
+    // update grid
+    grid.fade();
+    grid.fillWithRandom();
+
     
     // update devices
     for (auto& d : devices) {
@@ -110,14 +91,6 @@ void ofApp::draw(){
         }
     }
     ofPopStyle();
-    
-    if (drawMovie) {
-        movie.draw(20,500);
-        ofPushStyle();
-        ofNoFill();
-        ofDrawRectangle(20+movieOffsetX, 500+movieOffsetY, 80, 20);
-        ofPopStyle();
-    }
     
     ofDrawBitmapString(ofToString(ofGetFrameRate()), 15, 20+420);
     ofDrawBitmapString("target fps: " + ofToString(ofGetTargetFrameRate()), 15, 35+420);
