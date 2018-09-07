@@ -4,6 +4,7 @@
 #include "Device.h"
 #include "Grid.h"
 #include "ofxGui.h"
+#include "ofxOscControl.h"
 
 
 class ofApp : public ofBaseApp{
@@ -26,9 +27,14 @@ public:
     Grid grid;
     vector<Device> devices;
     
+    //OSC Controler
+    ofxOscControl oscControl;
+    
     // GUI
     ofxPanel guiGrid;
     ofxPanel gui;
+    
+    ofParameterGroup parameters;
     
     ofParameter<bool> bDrawGrid;
     ofParameter<bool> useMovie;
@@ -37,6 +43,7 @@ public:
     ofParameter<int> movieOffsetY;
     
     ofVideoPlayer movie;
+    
     
     
     // --------------------------

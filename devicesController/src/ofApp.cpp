@@ -14,6 +14,10 @@ void ofApp::setup(){
 	vector <ofSerialDeviceInfo> deviceList = serial.getDeviceList();
     int baud = 57600;
     serial.setup("/dev/tty.usbserial-AD0267J7", baud);
+
+    //OSCControl
+    oscControl.setup(7000);
+    oscControl.addParameterGroup(&parameters);
     
     // init grid
     vec2 size(800, 200);
@@ -36,11 +40,14 @@ void ofApp::setup(){
     guiGrid.add(grid.parameters);
     
     gui.setup();
-    gui.add(bDrawGrid.set("draw_grid", true));
-    gui.add(useMovie.set("use_movie", true));
-    gui.add(movieOffsetX.set("movie_offsetX", 0, 0, 500));
-    gui.add(movieOffsetY.set("movie_offsetY", 0, 0, 500));
-    gui.add(drawMovie.set("draw_movie", true));
+    parameters.setName("led_candles");
+    parameters.add(bDrawGrid.set("draw_grid", true));
+    parameters.add(useMovie.set("use_movie", true));
+    parameters.add(movieOffsetX.set("movie_offsetX", 0, 0, 500));
+    parameters.add(movieOffsetY.set("movie_offsetY", 0, 0, 500));
+    parameters.add(drawMovie.set("draw_movie", true));
+    
+    gui.add(parameters);
     
     // video
     movie.load("movies/fire_loop.mp4");
@@ -50,6 +57,7 @@ void ofApp::setup(){
 
 
 void ofApp::update(){
+    oscControl.update();
     
     if (useMovie) {
         // update video
@@ -130,7 +138,9 @@ void ofApp::draw(){
 
 
 void ofApp::keyPressed(int key){
-    
+    if (key == OF_KEY_RETURN){
+        oscControl.sendAllParameters("169.254.255.12", 8000);
+    }
 }
 
 
