@@ -5,6 +5,7 @@
 #include "Grid.h"
 #include "ofxGui.h"
 #include "ofxOscControl.h"
+#include "ofxPresets.h"
 
 
 class ofApp : public ofBaseApp{
@@ -38,7 +39,7 @@ public:
     
     ofParameter<bool> bDrawGrid;
     
-    
+    ofxPresets panelPresets;
     
     // --------------------------
     // Constants

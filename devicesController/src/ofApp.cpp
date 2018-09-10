@@ -16,9 +16,6 @@ void ofApp::setup(){
     int baud = 57600;
     serial.setup("/dev/tty.usbserial-AD0267J7", baud);
 
- 
-    
-    
     // init grid
     vec2 size(800, 200);
     vec2 resolution(80, 20);
@@ -44,6 +41,11 @@ void ofApp::setup(){
     parameters.add(grid.parameters);
 
     guiGrid.add(parameters);
+    
+    //preset
+    panelPresets.setup("presets", 10);
+    panelPresets.setPosition(805, 402);
+    panelPresets.setParameters(&parameters);
     
     //OSCControl
     oscControl.setup(7000);
@@ -112,13 +114,15 @@ void ofApp::draw(){
     
     guiGrid.draw();
 //    gui.draw();
+    
+    panelPresets.draw();
 }
 
 
 
 void ofApp::keyPressed(int key){
     if (key == OF_KEY_RETURN){
-        oscControl.sendAllParameters("169.254.225.12", 8000);
+        oscControl.sendAllParameters("127.0.0.1", 8000);
     }
 }
 

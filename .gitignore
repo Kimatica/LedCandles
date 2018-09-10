@@ -105,14 +105,8 @@ Desktop.ini
 .csettings
 /libs/openFrameworksCompiled/project/android/paths.make
 
-#########################
-# miscellaneous
-#########################
 
-.mailmap
 
-#########################
-# kinect mapper
 #########################
 
 !.gitkeep
