@@ -9,7 +9,6 @@
 
 using namespace glm;
 
-
 Grid::Grid() {
     parameters.setName("grid");
     parameters.add( dimmer.set("dimmer", 1, 0, 1));

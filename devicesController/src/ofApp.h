@@ -21,6 +21,7 @@ public:
     void mouseMoved(int x, int y );
     void mousePressed(int x, int y, int button);
     void mouseReleased(int x, int y, int button);
+    void onSendHostInfo();
     
     ofSerial serial;
     
@@ -30,14 +31,22 @@ public:
     //OSC Controler
     ofxOscControl oscControl;
     
+    //Osc Sender
+    ofxOscSender oscSender;
+    
     // GUI
-    ofxPanel guiGrid;
+    ofxPanel guiGrid, gui;
 //    ofxPanel gui;
     
     ofParameterGroup parameters;
+    ofParameterGroup saveOscParams;
     
     ofParameter<bool> bDrawGrid;
+    ofParameter<bool> bSendHostInfo;
     
+    ofParameter<string> oscHostName;
+    ofParameter<string> oscPort;
+
     
     
     // --------------------------

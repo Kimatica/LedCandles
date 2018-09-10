@@ -16,9 +16,6 @@ void ofApp::setup(){
     int baud = 57600;
     serial.setup("/dev/tty.usbserial-AD0267J7", baud);
 
- 
-    
-    
     // init grid
     vec2 size(800, 200);
     vec2 resolution(80, 20);
@@ -37,19 +34,27 @@ void ofApp::setup(){
     
     // gui
     guiGrid.setup();
-    guiGrid.setPosition(ofGetWidth()-guiGrid.getWidth()-20, 0);
-
+    gui.setup();
+    
+    gui.setPosition(ofGetWidth()-guiGrid.getWidth()-20, 0);
+    guiGrid.setPosition(ofGetWidth()-guiGrid.getWidth()-20, 150);
+    
+    bSendHostInfo.set("<-- Change OSC Info", false);
+    
+    saveOscParams.add(bSendHostInfo);
+    saveOscParams.add(oscHostName.set("Host Name"));
+    saveOscParams.add(oscPort.set("Host Port"));
+    gui.add(saveOscParams);
+   
     parameters.setName("led_candles");
     parameters.add(bDrawGrid.set("draw_grid", true));
     parameters.add(grid.parameters);
-
     guiGrid.add(parameters);
-    
+   
     //OSCControl
     oscControl.setup(7000);
     oscControl.addParameterGroup(&parameters);
 }
-
 
 void ofApp::update(){
     oscControl.update();
@@ -66,7 +71,6 @@ void ofApp::update(){
     writeSerial();
 }
 
-
 void ofApp::writeSerial() {
     if (!serial.isInitialized())
         return;
@@ -81,11 +85,17 @@ void ofApp::writeSerial() {
     }
 }
 
-
 void ofApp::draw(){
     
     if (bDrawGrid) {
         grid.draw();
+       
+    }
+    
+    if (bSendHostInfo){
+        oscControl.setRemoteHostName(oscHostName);
+        oscControl.setRemotePort(oscPort);
+        bSendHostInfo = !bSendHostInfo;
     }
     
     ofPushStyle();
@@ -111,14 +121,14 @@ void ofApp::draw(){
     ofDrawBitmapString("messages per frame: " + ofToString(devices.size()), 15, 50+420);
     
     guiGrid.draw();
-//    gui.draw();
+    gui.draw();
 }
 
 
 
 void ofApp::keyPressed(int key){
     if (key == OF_KEY_RETURN){
-        oscControl.sendAllParameters("169.254.225.12", 8000);
+        oscControl.sendAllParameters();
     }
 }
 
