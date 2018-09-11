@@ -50,7 +50,12 @@ void ofApp::setup(){
     parameters.add(bDrawGrid.set("draw_grid", true));
     parameters.add(grid.parameters);
     guiGrid.add(parameters);
-   
+    
+    //preset
+    panelPresets.setup("presets", 10);
+    panelPresets.setPosition(805, 402);
+    panelPresets.setParameters(&parameters);
+    
     //OSCControl
     oscControl.setup(7000);
     oscControl.addParameterGroup(&parameters);
@@ -122,6 +127,8 @@ void ofApp::draw(){
     
     guiGrid.draw();
     gui.draw();
+    
+    panelPresets.draw();
 }
 
 

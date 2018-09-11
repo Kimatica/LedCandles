@@ -5,6 +5,7 @@
 #include "Grid.h"
 #include "ofxGui.h"
 #include "ofxOscControl.h"
+#include "ofxPresets.h"
 
 
 class ofApp : public ofBaseApp{
@@ -43,11 +44,11 @@ public:
     
     ofParameter<bool> bDrawGrid;
     ofParameter<bool> bSendHostInfo;
-    
+
     ofParameter<string> oscHostName;
     ofParameter<string> oscPort;
 
-    
+    ofxPresets panelPresets;
     
     // --------------------------
     // Constants
