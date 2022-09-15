@@ -55,6 +55,7 @@ void ofApp::setup(){
     panelPresets.setup("presets", 10);
     panelPresets.setPosition(805, 402);
     panelPresets.setParameters(&parameters);
+    panelPresets.load();
     
     //OSCControl
     oscControl.setup(7000);
@@ -129,6 +130,10 @@ void ofApp::draw(){
     gui.draw();
     
     panelPresets.draw();
+}
+
+void ofApp::exit(){
+    panelPresets.save();
 }
 
 

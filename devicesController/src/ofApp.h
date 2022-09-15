@@ -14,7 +14,7 @@ public:
     void setup();
     void update();
     void draw();
-    
+    void exit();
     void writeSerial();
 
     void keyPressed  (int key);
